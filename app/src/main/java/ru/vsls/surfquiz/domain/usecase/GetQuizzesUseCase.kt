@@ -7,12 +7,23 @@ import javax.inject.Inject
 /**
  * UseCase для получения квизовых вопросов
  */
-class GetQuizzesUseCase @Inject constructor(
-    private val repository: QuizRepository,
-) {
+
+interface GetQuizzesUseCase {
     suspend operator fun invoke(
         amount: Int = 5,
         difficulty: String = "medium",
         type: String = "multiple",
-    ): List<Question> = repository.getQuizzes(amount, difficulty, type)
+    ): List<Question>
+}
+
+class GetQuizzesUseCaseImpl @Inject constructor(
+    private val repository: QuizRepository,
+): GetQuizzesUseCase {
+    override suspend fun invoke(
+        amount: Int,
+        difficulty: String,
+        type: String,
+    ): List<Question> {
+        return repository.getQuizzes(amount, difficulty, type)
+    }
 }

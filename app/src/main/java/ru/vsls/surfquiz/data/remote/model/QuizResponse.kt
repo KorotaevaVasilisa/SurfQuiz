@@ -3,7 +3,7 @@ package ru.vsls.surfquiz.data.remote.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
+
 /**
  * Корневой ответ API квизов
  * @param responseCode Код ответа

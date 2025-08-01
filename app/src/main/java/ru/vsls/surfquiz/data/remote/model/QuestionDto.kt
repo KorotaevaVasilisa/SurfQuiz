@@ -3,7 +3,6 @@ package ru.vsls.surfquiz.data.remote.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
 /**
  * DTO вопроса с вариантами ответов
  * @param type Тип вопроса
