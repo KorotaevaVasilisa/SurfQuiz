@@ -10,7 +10,7 @@ import ru.vsls.surfquiz.data.remote.model.QuizResponse
 interface QuizApiService {
     @GET("api.php")
     suspend fun getQuiz(
-        @Query("amount") amount: Int = 5,
+        @Query("amount") amount: Int,
         @Query("difficulty") difficulty: String = "medium",
         @Query("type") type: String = "multiple",
     ): QuizResponse

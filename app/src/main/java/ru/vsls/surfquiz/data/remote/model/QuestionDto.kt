@@ -1,4 +1,5 @@
 package ru.vsls.surfquiz.data.remote.model
+
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -12,6 +13,7 @@ import kotlinx.serialization.Serializable
  * @param correctAnswer Правильный ответ
  * @param incorrectAnswers Список неправильных вариантов
  */
+@Serializable
 data class QuestionDto(
     val type: String,
     val difficulty: String,
