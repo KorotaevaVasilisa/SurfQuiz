@@ -1,6 +1,6 @@
 package ru.vsls.surfquiz
 
-import ru.vsls.surfquiz.navigation.Screen
+import ru.vsls.surfquiz.presentation.navigation.Screen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

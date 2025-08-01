@@ -1,4 +1,4 @@
-package ru.vsls.surfquiz.navigation
+package ru.vsls.surfquiz.presentation.navigation
 
 sealed class Screen(val route: String) {
     object Quiz : Screen("quiz")
