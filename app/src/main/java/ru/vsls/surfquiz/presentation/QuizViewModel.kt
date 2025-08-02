@@ -13,7 +13,6 @@ import javax.inject.Inject
 class QuizViewModel @Inject constructor(
     private val getQuizzesUseCase: GetQuizzesUseCase,
 ) : ViewModel() {
-
     private val _state = MutableStateFlow(QuizUiState())
     val state: StateFlow<QuizUiState> = _state
 
@@ -22,11 +21,7 @@ class QuizViewModel @Inject constructor(
             _state.value = _state.value.copy(isLoading = true, error = null)
             try {
                 val questions = getQuizzesUseCase()
-                _state.value = _state.value.copy(
-                    questions = questions,
-                    isLoading = false,
-                    error = null
-                )
+                _state.value = QuizUiState(questions = questions)
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
                     error = e.message,
@@ -35,4 +30,29 @@ class QuizViewModel @Inject constructor(
             }
         }
     }
+
+    fun selectAnswer(answer: String) {
+        _state.value = _state.value.copy(selectedAnswer = answer)
+    }
+
+    fun onNextQuestion() {
+        val state = _state.value
+        val updatedAnswers = state.userAnswers + (state.selectedAnswer ?: "")
+        if (state.currentQuestionIndex < state.questions.lastIndex) {
+            _state.value = state.copy(
+                currentQuestionIndex = state.currentQuestionIndex + 1,
+                selectedAnswer = null,
+                userAnswers = updatedAnswers
+            )
+        } else {
+            val correctCount =
+                state.questions.zip(updatedAnswers).count { (q, a) -> q.correctAnswer == a }
+            _state.value = state.copy(
+                userAnswers = updatedAnswers,
+                quizFinished = true,
+                correctCount = correctCount
+            )
+        }
+    }
+
 }

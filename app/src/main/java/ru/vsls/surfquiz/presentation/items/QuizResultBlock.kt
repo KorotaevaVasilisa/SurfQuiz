@@ -1,0 +1,64 @@
+package ru.vsls.surfquiz.presentation.items
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import ru.vsls.surfquiz.domain.model.Question
+import ru.vsls.surfquiz.ui.theme.SurfQuizTheme
+
+@Composable
+fun QuizResultBlock(
+    correct: Int,
+    total: Int,
+    questions: List<Question>,
+    userAnswers: List<String>,
+    onRestart: () -> Unit,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text(
+            "Результат: $correct/$total",
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
+        questions.zip(userAnswers).forEachIndexed { idx, (q, a) ->
+            val correctMark = if (a == q.correctAnswer) "✔" else "✗"
+            val color = if (a == q.correctAnswer) Color(0xFF388E3C) else Color.Red
+            Text("${idx + 1}. ${q.question}", modifier = Modifier.padding(bottom = 4.dp))
+            Text(
+                "Ваш ответ: $a $correctMark",
+                color = color,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
+        Button(onClick = onRestart, modifier = Modifier.padding(top = 24.dp)) {
+            Text("Пройти ещё раз")
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun QuizResultBlockPreview() {
+    SurfQuizTheme {
+        QuizResultBlock(2, 3, listOf(), listOf(),) { }
+    }
+}
