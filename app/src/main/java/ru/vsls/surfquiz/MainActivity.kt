@@ -6,11 +6,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -25,8 +29,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ru.vsls.surfquiz.ui.theme.SurfQuizTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import dagger.hilt.android.AndroidEntryPoint
 import ru.vsls.surfquiz.presentation.HistoryScreen
@@ -47,30 +55,47 @@ class MainActivity : ComponentActivity() {
                         val currentRoute = navBackStackEntry?.destination?.route
                         when (currentRoute) {
                             Screen.Quiz.route, null -> {
-                                TopAppBar(
-                                    title = { Text(stringResource(R.string.dailyquiz)) },
+                                CenterAlignedTopAppBar(
+                                    title = {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.logo),
+                                            contentDescription = stringResource(R.string.app_name),
+                                            modifier = Modifier.height(50.dp)
+                                        )
+                                    },
                                     actions = {
                                         IconButton(onClick = { navController.navigate(Screen.History.route) }) {
                                             Icon(
-                                                imageVector = Icons.Filled.DateRange,
-                                                contentDescription = stringResource(R.string.history)
+                                                painter = painterResource(R.drawable.access_time),
+                                                contentDescription = stringResource(R.string.history),
+                                                tint = MaterialTheme.colorScheme.onPrimary
                                             )
                                         }
-                                    }
+                                    },
+                                    colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
                                 )
                             }
 
                             Screen.History.route ->
-                                TopAppBar(
-                                    title = { Text(stringResource(R.string.history)) },
+                                CenterAlignedTopAppBar(
+                                    title = {
+                                        Text(
+                                            stringResource(R.string.history),
+                                            color = MaterialTheme.colorScheme.onPrimary,
+                                            style = MaterialTheme.typography.headlineMedium
+                                        )
+                                    },
                                     navigationIcon = {
                                         IconButton(onClick = { navController.popBackStack() }) {
                                             Icon(
                                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                                contentDescription = stringResource(R.string.back)
+                                                contentDescription = stringResource(R.string.back),
+                                                tint = MaterialTheme.colorScheme.onPrimary
                                             )
                                         }
-                                    }
+                                    },
+                                    colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
+
                                 )
 
                         }

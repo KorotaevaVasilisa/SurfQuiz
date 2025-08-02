@@ -35,7 +35,8 @@ fun QuizQuestionBlock(
     isLast: Boolean,
 ) {
     val quizColors = LocalSurfQuizColors.current
-    Card(modifier = Modifier.padding(12.dp),
+    Card(
+        modifier = Modifier.padding(12.dp),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp,
@@ -92,21 +93,25 @@ fun QuizQuestionBlock(
             ) {
                 Text(if (isLast) "Завершить" else "Далее")
             }
-            Text(
-                text = "Вернуться к предыдущим вопросам нельзя",
-                color = quizColors.inactive,
-                modifier = Modifier.padding(top = 16.dp)
-            )
         }
     }
 }
-
 
 
 @Preview(showBackground = true)
 @Composable
 fun QuizQuestionBlockPreview() {
     SurfQuizTheme {
-        QuizQuestionBlock("How long human can't breathe?", listOf("1 minute", "5 minutes", "10 minutes"), null, {}, 0, 10, {}, true, false)
+        QuizQuestionBlock(
+            "How long human can't breathe?",
+            listOf("1 minute", "5 minutes", "10 minutes"),
+            null,
+            {},
+            0,
+            10,
+            {},
+            true,
+            false
+        )
     }
 }
