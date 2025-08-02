@@ -9,6 +9,8 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
@@ -17,21 +19,38 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = Pink80
 )
 
+// --- Новый ColorScheme на ваших цветах:
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = IndigoBackground,           // основной брендовый цвет
+    secondary = GoldRating,               // для акцентов
+    background = IndigoBackground,       // общий фон
+    surface = WhiteContainer,             // цвет контейнера
+    onPrimary = Color.White,              // контраст к primary
+    onSecondary = Color.White,            // контраст к secondary
+    onBackground = Color.Black,           // контраст к background
+    onSurface = Color.Black,              // контраст к surface
 )
+
+// --- Кастомные цвета (правильный, неправильный и пр.) ---
+data class SurfQuizColors(
+    val correct: Color,
+    val wrong: Color,
+    val rating: Color,
+    val selected: Color,
+    val inactive: Color,
+    val standart: Color
+)
+
+val LocalSurfQuizColors = staticCompositionLocalOf {
+    SurfQuizColors(
+        correct = GreenCorrect,
+        wrong = RedWrong,
+        rating = GoldRating,
+        selected = VioletSelected,
+        inactive = GreyInactive,
+        standart = Standart
+    )
+}
 
 @Composable
 fun SurfQuizTheme(
@@ -50,9 +69,21 @@ fun SurfQuizTheme(
         else -> LightColorScheme
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
+    val surfQuizColors = SurfQuizColors(
+        correct = GreenCorrect,
+        wrong = RedWrong,
+        rating = GoldRating,
+        selected = VioletSelected,
+        inactive = GreyInactive,
+        standart = Standart
     )
+    androidx.compose.runtime.CompositionLocalProvider(
+        LocalSurfQuizColors provides surfQuizColors
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }

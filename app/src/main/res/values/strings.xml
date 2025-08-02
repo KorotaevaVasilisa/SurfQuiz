@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">SurfQuiz</string>
+    <string name="history">История</string>
+    <string name="back">Назад</string>
+    <string name="dailyquiz">DailyQuiz</string>
+    <string name="start_dailyquiz">Добро пожаловать в DailyQuiz!</string>
+    <string name="start_game">Начать викторину</string>
+    <string name="additional_info">Вернуться к предыдущим вопросам нельзя</string>
+    <string name="start_again">Начать заново</string>
+    <string name="next_question">Далее</string>
+    <string name="complete_quiz">Завершить</string>
 </resources>
