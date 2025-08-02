@@ -12,11 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.vsls.surfquiz.domain.model.Question
 import ru.vsls.surfquiz.ui.theme.SurfQuizTheme
+import ru.vsls.surfquiz.ui.theme.LocalSurfQuizColors
 
 @Composable
 fun QuizResultBlock(
@@ -26,6 +26,8 @@ fun QuizResultBlock(
     userAnswers: List<String>,
     onRestart: () -> Unit,
 ) {
+    val quizColors = LocalSurfQuizColors.current
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -36,12 +38,13 @@ fun QuizResultBlock(
     ) {
         Text(
             "Результат: $correct/$total",
+            color = quizColors.rating,
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(bottom = 24.dp)
         )
         questions.zip(userAnswers).forEachIndexed { idx, (q, a) ->
             val correctMark = if (a == q.correctAnswer) "✔" else "✗"
-            val color = if (a == q.correctAnswer) Color(0xFF388E3C) else Color.Red
+            val color = if (a == q.correctAnswer) quizColors.correct else quizColors.wrong
             Text("${idx + 1}. ${q.question}", modifier = Modifier.padding(bottom = 4.dp))
             Text(
                 "Ваш ответ: $a $correctMark",

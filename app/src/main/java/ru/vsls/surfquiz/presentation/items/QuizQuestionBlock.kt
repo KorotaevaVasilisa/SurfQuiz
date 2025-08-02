@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import ru.vsls.surfquiz.ui.theme.LocalSurfQuizColors
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,51 +34,70 @@ fun QuizQuestionBlock(
     isNextEnabled: Boolean,
     isLast: Boolean,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    val quizColors = LocalSurfQuizColors.current
+    Card(modifier = Modifier.padding(12.dp),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp,
+            pressedElevation = 4.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
     ) {
-        Text(
-            text = "Вопрос ${currentIndex + 1} из $total",
-            color = Color.Gray,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        Text(
-            text = question,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
-        answers.forEach { answer ->
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp)
-            ) {
-                RadioButton(
-                    selected = selectedAnswer == answer,
-                    onClick = { onSelectAnswer(answer) }
-                )
-                Text(text = answer)
-            }
-        }
-        Button(
-            onClick = onNext,
-            enabled = isNextEnabled,
+        Column(
             modifier = Modifier
-                .padding(top = 24.dp)
-                .fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(if (isLast) "Завершить" else "Далее")
+            Text(
+                text = "Вопрос ${currentIndex + 1} из $total",
+                color = Color.Gray,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = question,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 24.dp)
+            )
+            answers.forEach { answer ->
+                val isSelected = selectedAnswer == answer
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp)
+                ) {
+                    RadioButton(
+                        selected = isSelected,
+                        onClick = { onSelectAnswer(answer) },
+                        colors = androidx.compose.material3.RadioButtonDefaults.colors(
+                            selectedColor = quizColors.selected,
+                        ),
+                    )
+                    Text(
+                        text = answer,
+                        color = if (isSelected) quizColors.selected else Color.Unspecified,
+                    )
+                }
+            }
+            Button(
+                onClick = onNext,
+                enabled = isNextEnabled,
+                modifier = Modifier
+                    .padding(top = 24.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(if (isLast) "Завершить" else "Далее")
+            }
+            Text(
+                text = "Вернуться к предыдущим вопросам нельзя",
+                color = quizColors.inactive,
+                modifier = Modifier.padding(top = 16.dp)
+            )
         }
-        Text(
-            text = "Вернуться к предыдущим вопросам нельзя",
-            color = Color.Gray,
-            modifier = Modifier.padding(top = 32.dp)
-        )
     }
 }
 
