@@ -19,3 +19,4 @@ val VioletSelected = Color(0xFF2B0063)   // выбранный ответ
 val GreyInactive = Color(0xFFBABABA)     // неактивные элементы
 val GreyContainerArea = Color(0xFFF3F3F3) // области на контейнерах
 val WhiteContainer = Color(0xFFFFFFFF)    // цвет контейнера
+val Standart = Color(0xFF000000)       // стандартный цвет

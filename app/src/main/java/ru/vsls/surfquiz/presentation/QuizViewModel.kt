@@ -1,11 +1,14 @@
 package ru.vsls.surfquiz.presentation
 
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import ru.vsls.surfquiz.R
 import ru.vsls.surfquiz.domain.usecase.GetQuizzesUseCase
 import javax.inject.Inject
 
@@ -31,8 +34,29 @@ class QuizViewModel @Inject constructor(
         }
     }
 
+    fun restartQuiz() {
+        _state.value = QuizUiState()
+    }
+
     fun selectAnswer(answer: String) {
-        _state.value = _state.value.copy(selectedAnswer = answer)
+        val state = _state.value
+        if (state.isInteractionBlocked) return
+        _state.value = state.copy(selectedAnswer = answer)
+    }
+
+    fun onCheckAnswer() {
+        val state = _state.value
+        if (state.selectedAnswer == null) return
+        val isCorrect =
+            state.selectedAnswer == state.questions[state.currentQuestionIndex].correctAnswer
+        _state.value = state.copy(
+            isAnswerCorrect = isCorrect,
+            isInteractionBlocked = true
+        )
+        viewModelScope.launch {
+            delay(2000)
+            onNextQuestion()
+        }
     }
 
     fun onNextQuestion() {
@@ -42,7 +66,9 @@ class QuizViewModel @Inject constructor(
             _state.value = state.copy(
                 currentQuestionIndex = state.currentQuestionIndex + 1,
                 selectedAnswer = null,
-                userAnswers = updatedAnswers
+                userAnswers = updatedAnswers,
+                isAnswerCorrect = null,
+                isInteractionBlocked = false
             )
         } else {
             val correctCount =
@@ -50,9 +76,12 @@ class QuizViewModel @Inject constructor(
             _state.value = state.copy(
                 userAnswers = updatedAnswers,
                 quizFinished = true,
-                correctCount = correctCount
+                correctCount = correctCount,
+                isAnswerCorrect = null,
+                isInteractionBlocked = false
             )
         }
     }
-
 }
+
+

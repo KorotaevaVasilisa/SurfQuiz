@@ -6,9 +6,19 @@ import ru.vsls.surfquiz.domain.model.Question
 fun QuestionDto.toDomain(): Question = Question(
     category = category,
     difficulty = difficulty,
-    question = question,
-    correctAnswer = correctAnswer,
-    incorrectAnswers = incorrectAnswers
+    question = htmlDecode(question),
+    correctAnswer = htmlDecode(correctAnswer),
+    incorrectAnswers = incorrectAnswers.map { htmlDecode(it) }
 )
 
 fun List<QuestionDto>.toDomain(): List<Question> = map { it.toDomain() }
+
+fun htmlDecode(source: String): String {
+    return source
+        .replace("&quot;", "\"")
+        .replace("&amp;", "&")
+        .replace("&#039;", "'")
+        .replace("&lt;", "<")
+        .replace("&gt;", ">")
+        .replace("&eacute;", "é")
+}

@@ -38,6 +38,7 @@ data class SurfQuizColors(
     val rating: Color,
     val selected: Color,
     val inactive: Color,
+    val standart: Color
 )
 
 val LocalSurfQuizColors = staticCompositionLocalOf {
@@ -46,7 +47,8 @@ val LocalSurfQuizColors = staticCompositionLocalOf {
         wrong = RedWrong,
         rating = GoldRating,
         selected = VioletSelected,
-        inactive = GreyInactive
+        inactive = GreyInactive,
+        standart = Standart
     )
 }
 
@@ -72,7 +74,8 @@ fun SurfQuizTheme(
         wrong = RedWrong,
         rating = GoldRating,
         selected = VioletSelected,
-        inactive = GreyInactive
+        inactive = GreyInactive,
+        standart = Standart
     )
     androidx.compose.runtime.CompositionLocalProvider(
         LocalSurfQuizColors provides surfQuizColors

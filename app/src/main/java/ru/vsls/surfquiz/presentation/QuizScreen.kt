@@ -43,7 +43,7 @@ fun QuizScreen() {
                     total = uiState.questions.size,
                     questions = uiState.questions,
                     userAnswers = uiState.userAnswers,
-                    onRestart = { viewModel.loadQuiz() }
+                    onRestart = { viewModel.restartQuiz() }
                 )
 
             else -> {
@@ -62,8 +62,12 @@ fun QuizScreen() {
                         currentIndex = qIdx,
                         total = uiState.questions.size,
                         onNext = { viewModel.onNextQuestion() },
+                        correctAnswer = uiState.questions[qIdx].correctAnswer,
                         isNextEnabled = uiState.selectedAnswer != null,
-                        isLast = qIdx == uiState.questions.lastIndex
+                        isLast = qIdx == uiState.questions.lastIndex,
+                        isAnswerCorrect = uiState.isAnswerCorrect,
+                        onCheckAnswer = { viewModel.onCheckAnswer() },
+                        isInteractionBlocked = uiState.isInteractionBlocked
                     )
                     Text(
                         text = stringResource(R.string.additional_info),

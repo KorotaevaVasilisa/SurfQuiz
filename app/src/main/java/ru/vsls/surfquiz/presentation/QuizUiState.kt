@@ -11,4 +11,6 @@ data class QuizUiState(
     val error: String? = null,
     val quizFinished: Boolean = false,
     val correctCount: Int = 0,
+    val isAnswerCorrect: Boolean? = null,
+    val isInteractionBlocked: Boolean = false,
 )
