@@ -1,5 +1,6 @@
 package ru.vsls.surfquiz.presentation.screens.history
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import okhttp3.internal.platform.PlatformRegistry.applicationContext
 import ru.vsls.surfquiz.R
 import ru.vsls.surfquiz.presentation.items.InfoCard
 import ru.vsls.surfquiz.ui.theme.SurfQuizTheme
@@ -26,7 +28,11 @@ fun HistoryScreen(
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) { viewModel.loadHistory() }
-
+    LaunchedEffect(Unit) {
+        viewModel.toastMessage.collect { message ->
+            Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+        }
+    }
     when {
         state.isLoading -> CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
         state.error != null -> Text(
@@ -48,7 +54,7 @@ fun HistoryScreen(
                     isDimmed = isDimmed,
                     isSelected = isSelected,
                     onLongClick = viewModel::selectItem,
-                    onDelete = { viewModel.deleteEntry(entry.id) }
+                    onDelete = { viewModel.deleteEntry(entry.id)}
                 )
             }
         }

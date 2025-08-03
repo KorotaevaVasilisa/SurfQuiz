@@ -4,7 +4,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -20,6 +22,10 @@ class HistoryViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(HistoryUiState())
     val state: StateFlow<HistoryUiState> = _state.asStateFlow()
+
+    // SharedFlow для событий (показ тоста)
+    private val _toastMessage = MutableSharedFlow<String>()
+    val toastMessage: SharedFlow<String> = _toastMessage
 
     fun loadHistory() {
         _state.value = _state.value.copy(isLoading = true, error = null)
@@ -40,8 +46,13 @@ class HistoryViewModel @Inject constructor(
 
     fun deleteEntry(id: Long) {
         viewModelScope.launch {
-            deleteQuizHistoryUseCase(id)
-            loadHistory()
+            try {
+                deleteQuizHistoryUseCase(id)
+                _toastMessage.emit("Запись удалена")
+                loadHistory()
+            } catch (e: Exception) {
+                _toastMessage.emit("Ошибка удаления: ${e.message}")
+            }
         }
     }
 }
