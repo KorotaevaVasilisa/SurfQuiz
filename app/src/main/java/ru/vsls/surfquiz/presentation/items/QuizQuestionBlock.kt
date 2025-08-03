@@ -37,9 +37,9 @@ fun QuizQuestionBlock(
     isInteractionBlocked: Boolean,
     isAnswerCorrect: Boolean?,
     isNextEnabled: Boolean,
-    correctAnswer: String?, // новый параметр
-    onNext: () -> Unit,
+    correctAnswer: String?,
     onCheckAnswer: () -> Unit,
+    showButton: Boolean = true,
 ) {
     val quizColors = LocalSurfQuizColors.current
     Card(
@@ -56,7 +56,7 @@ fun QuizQuestionBlock(
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 24.dp, vertical = 32.dp),
+                .padding(horizontal = 24.dp, vertical = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -103,15 +103,16 @@ fun QuizQuestionBlock(
                     )
                 }
             }
-            Button(
-                onClick = onCheckAnswer,
-                enabled = isNextEnabled && !isInteractionBlocked,
-                modifier = Modifier
-                    .padding(top = 24.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(if (isLast) stringResource(R.string.complete_quiz) else stringResource(R.string.next_question))
-            }
+            if(showButton)
+                Button(
+                    onClick = onCheckAnswer,
+                    enabled = isNextEnabled && !isInteractionBlocked,
+                    modifier = Modifier
+                        .padding(top = 24.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(if (isLast) stringResource(R.string.complete_quiz) else stringResource(R.string.next_question))
+                }
         }
     }
 }
@@ -133,7 +134,6 @@ fun QuizQuestionBlockPreview() {
             isAnswerCorrect = false,
             isNextEnabled = true,
             correctAnswer = "5 minutes",
-            onNext = {},
             onCheckAnswer = {}
         )
     }

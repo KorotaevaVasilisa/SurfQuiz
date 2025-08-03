@@ -13,4 +13,5 @@
     <string name="start_new_quiz">Начать викторину</string>
     <string name="delete_item">Удалить</string>
     <string name="results">Результаты</string>
+    <string name="empty_data">Нет данных для отображения</string>
 </resources>

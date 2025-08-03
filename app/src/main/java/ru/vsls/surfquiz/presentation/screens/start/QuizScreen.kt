@@ -14,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.vsls.surfquiz.R
-import ru.vsls.surfquiz.presentation.screens.start.QuizViewModel
 import ru.vsls.surfquiz.presentation.items.QuizQuestionBlock
 import ru.vsls.surfquiz.ui.theme.LocalSurfQuizColors
 import ru.vsls.surfquiz.presentation.items.QuizResultBlock
@@ -40,8 +39,6 @@ fun QuizScreen() {
                 QuizResultBlock(
                     correct = uiState.correctCount,
                     total = uiState.questions.size,
-                    questions = uiState.questions,
-                    userAnswers = uiState.userAnswers,
                     onRestart = { viewModel.restartQuiz() }
                 )
 
@@ -60,7 +57,6 @@ fun QuizScreen() {
                         onSelectAnswer = { viewModel.selectAnswer(it) },
                         currentIndex = qIdx,
                         total = uiState.questions.size,
-                        onNext = { viewModel.onNextQuestion() },
                         correctAnswer = uiState.questions[qIdx].correctAnswer,
                         isNextEnabled = uiState.selectedAnswer != null,
                         isLast = qIdx == uiState.questions.lastIndex,
