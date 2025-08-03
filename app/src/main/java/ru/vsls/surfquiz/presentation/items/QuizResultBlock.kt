@@ -17,7 +17,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.vsls.surfquiz.R
-import ru.vsls.surfquiz.domain.model.Question
 import ru.vsls.surfquiz.ui.theme.LocalSurfQuizColors
 import ru.vsls.surfquiz.ui.theme.SurfQuizTheme
 
@@ -26,8 +25,6 @@ import ru.vsls.surfquiz.ui.theme.SurfQuizTheme
 fun QuizResultBlock(
     correct: Int,
     total: Int,
-    questions: List<Question>,
-    userAnswers: List<String>,
     onRestart: () -> Unit,
 ) {
     val quizColors = LocalSurfQuizColors.current
@@ -72,16 +69,6 @@ fun QuizResultBlock(
                 modifier = Modifier.padding(bottom = 20.dp),
                 textAlign = TextAlign.Center
             )
-//            questions.zip(userAnswers).forEachIndexed { idx, (q, a) ->
-//                val correctMark = if (a == q.correctAnswer) "✔" else "✗"
-//                val color = if (a == q.correctAnswer) quizColors.correct else quizColors.wrong
-//                Text("${idx + 1}. ${q.question}", modifier = Modifier.padding(bottom = 4.dp))
-//                Text(
-//                    "Ваш ответ: $a $correctMark",
-//                    color = color,
-//                    modifier = Modifier.padding(bottom = 8.dp)
-//                )
-//            }
             Button(onClick = onRestart, modifier = Modifier.padding(top = 24.dp)) {
                 Text(stringResource(R.string.start_again))
             }
@@ -93,7 +80,7 @@ fun QuizResultBlock(
 @Composable
 fun QuizResultBlockPreview() {
     SurfQuizTheme {
-        QuizResultBlock(2, 3, listOf(), listOf(),) { }
+        QuizResultBlock(2, 3, ) { }
     }
 }
 

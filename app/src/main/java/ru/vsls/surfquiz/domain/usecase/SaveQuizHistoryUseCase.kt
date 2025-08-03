@@ -6,12 +6,12 @@ import ru.vsls.surfquiz.data.local.mappers.toEntity
 import javax.inject.Inject
 
 interface SaveQuizHistoryUseCase {
-    suspend operator fun invoke(entry: QuizHistoryEntry)
+    suspend operator fun invoke(entry: QuizHistoryEntry): Long
 }
 
 class SaveQuizHistoryUseCaseImpl @Inject constructor(
     private val repository: QuizLocalRepository,
 ) : SaveQuizHistoryUseCase {
-    override suspend fun invoke(entry: QuizHistoryEntry) =
+    override suspend fun invoke(entry: QuizHistoryEntry): Long =
         repository.saveResult(entry.toEntity())
 }
