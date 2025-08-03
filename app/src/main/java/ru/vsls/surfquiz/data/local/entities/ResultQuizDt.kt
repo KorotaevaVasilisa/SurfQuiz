@@ -3,8 +3,8 @@ package ru.vsls.surfquiz.data.local.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = QuizDt.DETAILS_TABLE_NAME)
-data class QuizDt(
+@Entity(tableName = ResultQuizDt.DETAILS_TABLE_NAME)
+data class ResultQuizDt(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val dateTime: Long,

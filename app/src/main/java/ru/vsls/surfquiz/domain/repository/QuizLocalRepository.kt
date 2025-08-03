@@ -1,9 +1,9 @@
 package ru.vsls.surfquiz.domain.repository
 
-import ru.vsls.surfquiz.data.local.entities.QuizDt
+import ru.vsls.surfquiz.data.local.entities.ResultQuizDt
 
 interface QuizLocalRepository {
-        suspend fun saveResult(result: QuizDt)
-        suspend fun getHistory(): List<QuizDt>
+        suspend fun saveResult(result: ResultQuizDt)
+        suspend fun getHistory(): List<ResultQuizDt>
         suspend fun deleteById(id: Int)
 }
