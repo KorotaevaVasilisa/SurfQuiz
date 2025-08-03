@@ -23,7 +23,11 @@ import ru.vsls.surfquiz.presentation.items.QuizQuestionBlock
 import ru.vsls.surfquiz.presentation.items.QuizResultBlock
 
 @Composable
-fun DetailsScreen(id: Long?, viewModel: DetailsViewModel = hiltViewModel()) {
+fun DetailsScreen(
+    id: Long?,
+    onBackToStart: () -> Unit,
+    viewModel: DetailsViewModel = hiltViewModel(),
+) {
     val uiState by viewModel.state.collectAsState()
 
     LaunchedEffect(id) {
@@ -40,14 +44,14 @@ fun DetailsScreen(id: Long?, viewModel: DetailsViewModel = hiltViewModel()) {
             uiState.isLoading -> CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
             uiState.error != null -> Text("Ошибка: ${uiState.error}")
             else -> {
-                ListDetails(uiState)
+                ListDetails(uiState, { onBackToStart() })
             }
         }
     }
 }
 
 @Composable
-fun ListDetails(state: DetailsUiState) {
+fun ListDetails(state: DetailsUiState, onBackToStart: () -> Unit) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -60,7 +64,7 @@ fun ListDetails(state: DetailsUiState) {
         QuizResultBlock(
             correct = state.details.correctCount,
             total = state.details.questions.size,
-            onRestart = { }
+            onRestart = { onBackToStart() }
         )
         state.details.questions.forEachIndexed { index, question ->
             val userAnswer = state.details.usersAnswers.getOrNull(index)
