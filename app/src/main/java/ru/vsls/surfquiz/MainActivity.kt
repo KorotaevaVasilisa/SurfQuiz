@@ -34,7 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import dagger.hilt.android.AndroidEntryPoint
-import ru.vsls.surfquiz.presentation.screens.detailed.DetailedScreen
+import ru.vsls.surfquiz.presentation.screens.detailed.DetailsScreen
 import ru.vsls.surfquiz.presentation.screens.history.HistoryScreen
 import ru.vsls.surfquiz.presentation.screens.start.QuizScreen
 
@@ -153,7 +153,7 @@ fun QuizNavHost(navController: NavHostController, modifier: Modifier = Modifier)
         }
         composable("details/{id}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("id")?.toLong()
-            DetailedScreen(id = id)
+            DetailsScreen(id = id)
         }
     }
 }

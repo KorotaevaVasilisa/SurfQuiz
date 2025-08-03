@@ -17,7 +17,7 @@ interface QuizDao {
     @Query("DELETE FROM quizzes_table WHERE id = :id")
     suspend fun deleteById(id: Long)
 
-    @Query("SELECT * FROM answers_table WHERE id = :id")
+    @Query("SELECT * FROM answers_table WHERE resultId = :id")
     suspend fun getDetailsById(id: Long): UserQuizAnswer
 
     @Insert

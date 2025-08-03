@@ -8,15 +8,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.vsls.surfquiz.domain.model.QuizDetailsEntry
 import ru.vsls.surfquiz.domain.model.QuizHistoryEntry
 import ru.vsls.surfquiz.domain.usecase.GetQuizzesUseCase
+import ru.vsls.surfquiz.domain.usecase.SaveQuizDetailsUseCase
 import ru.vsls.surfquiz.domain.usecase.SaveQuizHistoryUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
     private val getQuizzesUseCase: GetQuizzesUseCase,
-    private val saveQuizResultUseCase: SaveQuizHistoryUseCase
+    private val saveQuizResultUseCase: SaveQuizHistoryUseCase,
+    private val saveQuizDetailsUseCase: SaveQuizDetailsUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(QuizUiState())
     val state: StateFlow<QuizUiState> = _state.asStateFlow()
@@ -56,7 +59,7 @@ class QuizViewModel @Inject constructor(
             isInteractionBlocked = true
         )
         viewModelScope.launch {
-            delay(2000)
+            delay(1000)
             onNextQuestion()
         }
     }
@@ -84,12 +87,20 @@ class QuizViewModel @Inject constructor(
             )
             // Сохраняем результат викторины
             viewModelScope.launch {
-                saveQuizResultUseCase(
+                val historyId = saveQuizResultUseCase(
                     QuizHistoryEntry(
                         dateTime = System.currentTimeMillis(),
                         correctAnswers = correctCount,
                         totalQuestions = state.questions.size,
                         difficulty = state.questions.firstOrNull()?.difficulty ?: ""
+                    )
+                )
+                saveQuizDetailsUseCase(
+                    QuizDetailsEntry(
+                        resultId = historyId,
+                        correctCount = state.correctCount,
+                        usersAnswers = state.userAnswers,
+                        questions = state.questions
                     )
                 )
             }
