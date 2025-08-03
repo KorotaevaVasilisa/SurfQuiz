@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.vsls.surfquiz.domain.usecase.GetQuizzesUseCase
 import javax.inject.Inject
@@ -15,7 +16,7 @@ class QuizViewModel @Inject constructor(
     private val getQuizzesUseCase: GetQuizzesUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(QuizUiState())
-    val state: StateFlow<QuizUiState> = _state
+    val state: StateFlow<QuizUiState> = _state.asStateFlow()
 
     fun loadQuiz() {
         viewModelScope.launch {
