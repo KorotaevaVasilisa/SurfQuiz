@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.vsls.surfquiz.data.local.QuizLocalRepositoryImpl
 import ru.vsls.surfquiz.domain.repository.QuizRepository
-import ru.vsls.surfquiz.data.repository.QuizRepositoryImpl
+import ru.vsls.surfquiz.data.remote.repository.QuizRepositoryImpl
 import ru.vsls.surfquiz.domain.repository.QuizLocalRepository
 import ru.vsls.surfquiz.domain.usecase.GetQuizzesUseCase
 import ru.vsls.surfquiz.domain.usecase.GetQuizzesUseCaseImpl

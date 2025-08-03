@@ -98,7 +98,7 @@ class QuizViewModel @Inject constructor(
                 saveQuizDetailsUseCase(
                     QuizDetailsEntry(
                         resultId = historyId,
-                        correctCount = state.correctCount,
+                        correctCount = correctCount,
                         usersAnswers = state.userAnswers,
                         questions = state.questions
                     )

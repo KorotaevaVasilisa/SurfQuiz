@@ -153,7 +153,13 @@ fun QuizNavHost(navController: NavHostController, modifier: Modifier = Modifier)
         }
         composable("details/{id}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("id")?.toLong()
-            DetailsScreen(id = id)
+            DetailsScreen(id = id,
+                onBackToStart = {
+                    navController.navigate(Screen.Quiz.route) {
+                        popUpTo(Screen.Quiz.route) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 }

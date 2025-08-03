@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SurfQuiz</string>
+    <string name="app_name">Daily Quiz</string>
     <string name="history">История</string>
     <string name="back">Назад</string>
     <string name="dailyquiz">DailyQuiz</string>

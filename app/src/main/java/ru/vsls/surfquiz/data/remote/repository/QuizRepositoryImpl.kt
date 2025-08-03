@@ -1,4 +1,4 @@
-package ru.vsls.surfquiz.data.repository
+package ru.vsls.surfquiz.data.remote.repository
 
 import ru.vsls.surfquiz.domain.model.Question
 import ru.vsls.surfquiz.domain.repository.QuizRepository

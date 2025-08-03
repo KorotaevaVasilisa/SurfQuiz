@@ -1,5 +1,6 @@
 package ru.vsls.surfquiz.domain.usecase
 
+import android.util.Log.i
 import ru.vsls.surfquiz.domain.repository.QuizLocalRepository
 import javax.inject.Inject
 
@@ -10,5 +11,8 @@ interface DeleteQuizHistoryEntryUseCase {
 class DeleteQuizHistoryEntryUseCaseImpl @Inject constructor(
     private val repository: QuizLocalRepository,
 ) : DeleteQuizHistoryEntryUseCase {
-    override suspend fun invoke(id: Long) = repository.deleteById(id)
+    override suspend fun invoke(id: Long) {
+        repository.deleteHistoryById(id)
+        repository.deleteDetailsById(id)
+    }
 }
