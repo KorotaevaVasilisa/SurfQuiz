@@ -64,7 +64,7 @@ fun InfoScreen(onBackToStart: () -> Unit) {
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = stringResource(R.string.app_name),
-            modifier = Modifier.height(80.dp)
+            modifier = Modifier.fillMaxWidth().height(100.dp).padding(horizontal = 40.dp)
         )
     }
 }
@@ -94,6 +94,6 @@ fun HistoryItem(entry: QuizHistoryEntry, onClick: () -> Unit) {
 @Composable
 fun HistoryScreenPreview() {
     SurfQuizTheme {
-        HistoryScreen()
+        InfoScreen({})
     }
 }

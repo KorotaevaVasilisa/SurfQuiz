@@ -8,12 +8,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.vsls.surfquiz.domain.model.QuizHistoryEntry
 import ru.vsls.surfquiz.domain.usecase.GetQuizzesUseCase
+import ru.vsls.surfquiz.domain.usecase.SaveQuizHistoryUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
     private val getQuizzesUseCase: GetQuizzesUseCase,
+    private val saveQuizResultUseCase: SaveQuizHistoryUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(QuizUiState())
     val state: StateFlow<QuizUiState> = _state.asStateFlow()
@@ -79,6 +82,17 @@ class QuizViewModel @Inject constructor(
                 isAnswerCorrect = null,
                 isInteractionBlocked = false
             )
+            // Сохраняем результат викторины
+            viewModelScope.launch {
+                saveQuizResultUseCase(
+                    QuizHistoryEntry(
+                        dateTime = System.currentTimeMillis(),
+                        correctAnswers = correctCount,
+                        totalQuestions = state.questions.size,
+                        difficulty = state.questions.firstOrNull()?.difficulty ?: ""
+                    )
+                )
+            }
         }
     }
 }
