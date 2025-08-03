@@ -21,4 +21,6 @@ fun htmlDecode(source: String): String {
         .replace("&lt;", "<")
         .replace("&gt;", ">")
         .replace("&eacute;", "é")
+        .replace("&auml;", "ä")
+        .replace("&ouml;", "ö")
 }
