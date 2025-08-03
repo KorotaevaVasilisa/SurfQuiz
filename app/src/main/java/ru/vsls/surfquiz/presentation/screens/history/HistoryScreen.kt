@@ -6,18 +6,21 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.vsls.surfquiz.R
 import ru.vsls.surfquiz.domain.model.QuizHistoryEntry
 import ru.vsls.surfquiz.presentation.items.InfoCard
+import ru.vsls.surfquiz.presentation.items.ScoreStars
 import ru.vsls.surfquiz.ui.theme.SurfQuizTheme
 
 @Composable
@@ -64,7 +67,10 @@ fun InfoScreen(onBackToStart: () -> Unit) {
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = stringResource(R.string.app_name),
-            modifier = Modifier.fillMaxWidth().height(100.dp).padding(horizontal = 40.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .padding(horizontal = 40.dp)
         )
     }
 }
@@ -73,19 +79,42 @@ fun InfoScreen(onBackToStart: () -> Unit) {
 fun HistoryItem(entry: QuizHistoryEntry, onClick: () -> Unit) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 4.dp)
-            .clickable { onClick() }
+            .padding(horizontal = 12.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp,
+            pressedElevation = 4.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "NAME",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                ScoreStars(entry.correctAnswers, entry.totalQuestions)
+            }
             Text(
                 "Дата: ${
                     java.text.SimpleDateFormat("dd.MM.yyyy HH:mm")
                         .format(java.util.Date(entry.dateTime))
                 }"
             )
-            Text("Верных: ${entry.correctAnswers} из ${entry.totalQuestions}")
-            Text("Сложность: ${entry.difficulty}")
+            Text(
+                "Сложность: ${entry.difficulty}",
+                modifier = Modifier.fillMaxWidth(1f),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
@@ -94,6 +123,6 @@ fun HistoryItem(entry: QuizHistoryEntry, onClick: () -> Unit) {
 @Composable
 fun HistoryScreenPreview() {
     SurfQuizTheme {
-        InfoScreen({})
+        HistoryItem(QuizHistoryEntry(222, 1234567890L, 4, 5, "medium")) { }
     }
 }
