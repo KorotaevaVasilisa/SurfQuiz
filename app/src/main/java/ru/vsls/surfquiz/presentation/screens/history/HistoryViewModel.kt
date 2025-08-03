@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.vsls.surfquiz.domain.usecase.DeleteQuizHistoryEntryUseCase
 import ru.vsls.surfquiz.domain.usecase.GetQuizHistoryUseCase
+import ru.vsls.surfquiz.presentation.screens.history.toUiModels
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +26,8 @@ class HistoryViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val history = getQuizHistoryUseCase()
-                _state.value = _state.value.copy(isLoading = false, history = history)
+                val uiHistory = history.toUiModels()
+                _state.value = _state.value.copy(isLoading = false, history = uiHistory)
             } catch (e: Exception) {
                 _state.value = _state.value.copy(isLoading = false, error = e.message)
             }

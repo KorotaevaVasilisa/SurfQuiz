@@ -21,6 +21,7 @@ private val DarkColorScheme = darkColorScheme(
     onSecondary = Color.White,
     onBackground = GreyContainerArea,
     onSurface = GreyContainerArea,
+    inverseSurface = InverseContainerDark
 )
 
 // --- Новый ColorScheme на ваших цветах:
@@ -33,6 +34,7 @@ private val LightColorScheme = lightColorScheme(
     onSecondary = Color.White,            // контраст к secondary
     onBackground = Color.Black,           // контраст к background
     onSurface = Color.Black,              // контраст к surface
+    inverseSurface = InverseContainerLight
 )
 
 // --- Кастомные цвета (правильный, неправильный и пр.) ---

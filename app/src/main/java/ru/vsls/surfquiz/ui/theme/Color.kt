@@ -2,12 +2,9 @@ package ru.vsls.surfquiz.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
 val DarkBlack = Color(0xFF161B21)
 val DarkContainer =  Color(0xFF5B626B)
+val InverseContainerDark = Color(0xFF565D65)
 val RedWrong = Color(0xFFE70000)      // неправильные ответы
 val GreenCorrect = Color(0xFF00AE3A)  // правильные ответы
 val GoldRating = Color(0xFFFFB800)    // рейтинг
@@ -17,3 +14,4 @@ val GreyInactive = Color(0xFFBABABA)     // неактивные элемент�
 val GreyContainerArea = Color(0xFFF3F3F3) // области на контейнерах
 val WhiteContainer = Color(0xFFFFFFFF)    // цвет контейнера
 val Standart = Color(0xFF000000)       // стандартный цвет
+val InverseContainerLight = Color(0xFFE1E1E1)
