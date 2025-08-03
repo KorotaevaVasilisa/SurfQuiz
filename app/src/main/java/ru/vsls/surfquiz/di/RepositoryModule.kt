@@ -16,6 +16,10 @@ import ru.vsls.surfquiz.domain.usecase.SaveQuizHistoryUseCase
 import ru.vsls.surfquiz.domain.usecase.SaveQuizHistoryUseCaseImpl
 import ru.vsls.surfquiz.domain.usecase.DeleteQuizHistoryEntryUseCase
 import ru.vsls.surfquiz.domain.usecase.DeleteQuizHistoryEntryUseCaseImpl
+import ru.vsls.surfquiz.domain.usecase.GetQuizDetailsUseCase
+import ru.vsls.surfquiz.domain.usecase.GetQuizDetailsUseCaseImpl
+import ru.vsls.surfquiz.domain.usecase.SaveQuizDetailsUseCase
+import ru.vsls.surfquiz.domain.usecase.SaveQuizDetailsUseCaseImpl
 import javax.inject.Singleton
 
 @Module
@@ -44,4 +48,12 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindDeleteQuizHistoryEntryUseCase(impl: DeleteQuizHistoryEntryUseCaseImpl): DeleteQuizHistoryEntryUseCase
+
+    @Binds
+    @Singleton
+    abstract fun bindSaveQuizDetailsUseCase(impl: SaveQuizDetailsUseCaseImpl): SaveQuizDetailsUseCase
+
+    @Binds
+    @Singleton
+    abstract fun bindGetQuizDetailsUseCase(impl: GetQuizDetailsUseCaseImpl): GetQuizDetailsUseCase
 }
