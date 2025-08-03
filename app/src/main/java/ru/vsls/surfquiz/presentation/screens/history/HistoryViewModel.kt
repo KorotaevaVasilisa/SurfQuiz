@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.vsls.surfquiz.domain.usecase.DeleteQuizHistoryEntryUseCase
 import ru.vsls.surfquiz.domain.usecase.GetQuizHistoryUseCase
-import ru.vsls.surfquiz.presentation.screens.history.toUiModels
 import javax.inject.Inject
 
 @HiltViewModel

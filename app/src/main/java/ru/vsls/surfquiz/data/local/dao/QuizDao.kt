@@ -15,11 +15,14 @@ interface QuizDao {
     suspend fun getAllResults(): List<ResultQuizDt>
 
     @Query("DELETE FROM quizzes_table WHERE id = :id")
-    suspend fun deleteById(id: Long)
+    suspend fun deleteHistoryById(id: Long)
 
     @Query("SELECT * FROM answers_table WHERE resultId = :id")
     suspend fun getDetailsById(id: Long): UserQuizAnswer
 
     @Insert
     suspend fun insertDetails(answer: UserQuizAnswer)
+
+    @Query("DELETE FROM answers_table WHERE resultId = :id")
+    suspend fun deleteDetailsById(id: Long)
 }
