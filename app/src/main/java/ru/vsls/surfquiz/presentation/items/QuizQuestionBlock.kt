@@ -79,7 +79,7 @@ fun QuizQuestionBlock(
                     isSelected && isAnswerCorrect == false -> quizColors.wrong
                     !isSelected && isAnswerCorrect == false && isRight -> quizColors.correct
                     isSelected && isAnswerCorrect == null -> quizColors.selected
-                    else -> quizColors.standart
+                    else -> MaterialTheme.colorScheme.onSurface
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
