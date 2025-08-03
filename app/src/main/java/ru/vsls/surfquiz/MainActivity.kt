@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import dagger.hilt.android.AndroidEntryPoint
+import ru.vsls.surfquiz.presentation.screens.detailed.DetailedScreen
 import ru.vsls.surfquiz.presentation.screens.history.HistoryScreen
 import ru.vsls.surfquiz.presentation.screens.start.QuizScreen
 
@@ -94,7 +95,26 @@ class MainActivity : ComponentActivity() {
                                     colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
 
                                 )
-
+                            Screen.Details.route ->
+                                CenterAlignedTopAppBar(
+                                    title = {
+                                        Text(
+                                            stringResource(R.string.results),
+                                            color = MaterialTheme.colorScheme.onPrimary,
+                                            style = MaterialTheme.typography.headlineMedium
+                                        )
+                                    },
+                                    navigationIcon = {
+                                        IconButton(onClick = { navController.popBackStack() }) {
+                                            Icon(
+                                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                                contentDescription = stringResource(R.string.back),
+                                                tint = MaterialTheme.colorScheme.onPrimary
+                                            )
+                                        }
+                                    },
+                                    colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
+                                )
                         }
                     },
                     modifier = Modifier.fillMaxSize()
@@ -125,8 +145,15 @@ fun QuizNavHost(navController: NavHostController, modifier: Modifier = Modifier)
                     navController.navigate(Screen.Quiz.route) {
                         popUpTo(Screen.Quiz.route) { inclusive = true }
                     }
+                },
+                onNavigateDetailedScreen = { id ->
+                    navController.navigate("details/$id")
                 }
             )
+        }
+        composable("details/{id}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")?.toLong()
+            DetailedScreen(id = id)
         }
     }
 }

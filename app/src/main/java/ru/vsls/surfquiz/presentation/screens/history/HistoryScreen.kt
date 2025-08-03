@@ -24,6 +24,7 @@ import ru.vsls.surfquiz.ui.theme.SurfQuizTheme
 fun HistoryScreen(
     viewModel: HistoryViewModel = hiltViewModel(),
     onBackToStart: () -> Unit = {},
+    onNavigateDetailedScreen: (id: Long) -> Unit,
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -54,7 +55,8 @@ fun HistoryScreen(
                     isDimmed = isDimmed,
                     isSelected = isSelected,
                     onLongClick = viewModel::selectItem,
-                    onDelete = { viewModel.deleteEntry(entry.id)}
+                    onDelete = { viewModel.deleteEntry(entry.id) },
+                    onNextScreen = { onNavigateDetailedScreen(entry.id) }
                 )
             }
         }
@@ -99,7 +101,8 @@ fun HistoryScreenPreview() {
             isDimmed = false,
             isSelected = false,
             onLongClick = {},
-            onDelete = {}
+            onDelete = {},
+            onNextScreen = {}
         )
     }
 }

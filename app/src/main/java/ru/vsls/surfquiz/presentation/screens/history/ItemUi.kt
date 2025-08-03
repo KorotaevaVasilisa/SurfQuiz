@@ -35,6 +35,7 @@ fun HistoryItem(
     isSelected: Boolean,
     onLongClick: (id: Long?) -> Unit,
     onDelete: () -> Unit,
+    onNextScreen: ()->Unit
 ) {
     val cardColor =
         if (isDimmed) MaterialTheme.colorScheme.inverseSurface else MaterialTheme.colorScheme.surface
@@ -70,7 +71,7 @@ fun HistoryItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .combinedClickable(
-                    onClick = { /* Можно добавить переход на детали/результат */ },
+                    onClick = { onNextScreen() },
                     onLongClick = { onLongClick(model.id) }
                 ),
             shape = RoundedCornerShape(12.dp),
