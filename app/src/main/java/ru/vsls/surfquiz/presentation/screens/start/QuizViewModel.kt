@@ -1,6 +1,5 @@
-package ru.vsls.surfquiz.presentation
+package ru.vsls.surfquiz.presentation.screens.start
 
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,7 +7,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import ru.vsls.surfquiz.R
 import ru.vsls.surfquiz.domain.usecase.GetQuizzesUseCase
 import javax.inject.Inject
 
@@ -83,5 +81,3 @@ class QuizViewModel @Inject constructor(
         }
     }
 }
-
-

@@ -1,4 +1,4 @@
-package ru.vsls.surfquiz.presentation
+package ru.vsls.surfquiz.presentation.screens.history
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

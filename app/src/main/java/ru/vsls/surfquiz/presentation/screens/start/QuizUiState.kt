@@ -1,4 +1,4 @@
-package ru.vsls.surfquiz.presentation
+package ru.vsls.surfquiz.presentation.screens.start
 
 import ru.vsls.surfquiz.domain.model.Question
 
