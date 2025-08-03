@@ -13,7 +13,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.vsls.surfquiz.R
 import ru.vsls.surfquiz.presentation.items.QuizQuestionBlock
 import ru.vsls.surfquiz.ui.theme.LocalSurfQuizColors
@@ -34,10 +33,14 @@ fun QuizScreen() {
     ) {
         when {
             uiState.isLoading -> CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
-            uiState.error != null -> ErrorBlock(uiState.error, viewModel::loadQuiz)
-                uiState.questions.isEmpty()
+            uiState.error != null -> ErrorBlock(
+                uiState.error,
+                { level -> viewModel.loadQuiz(level) })
 
-            -> QuizStartBlock(onStart = { viewModel.loadQuiz() })
+            uiState.questions.isEmpty() -> QuizStartBlock(onStart = { level ->
+                viewModel.loadQuiz(level)
+            })
+
             uiState.quizFinished ->
                 QuizResultBlock(
                     correct = uiState.correctCount,
@@ -82,10 +85,10 @@ fun QuizScreen() {
 @Composable
 fun ErrorBlock(
     error: String?,
-    loadQuiz: () -> Unit,
+    loadQuiz: (String) -> Unit,
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        QuizStartBlock(onStart = { loadQuiz() })
+        QuizStartBlock(onStart = { loadQuiz })
         Text("Ошибка: ${error}", color = Color.Red)
     }
 }
