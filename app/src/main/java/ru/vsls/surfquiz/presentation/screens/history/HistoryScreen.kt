@@ -5,7 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,6 +22,8 @@ import ru.vsls.surfquiz.domain.model.QuizHistoryEntry
 import ru.vsls.surfquiz.presentation.items.InfoCard
 import ru.vsls.surfquiz.presentation.items.ScoreStars
 import ru.vsls.surfquiz.ui.theme.SurfQuizTheme
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @Composable
 fun HistoryScreen(
@@ -46,8 +48,12 @@ fun HistoryScreen(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            items(state.history) { entry ->
-                HistoryItem(entry, onClick = { onItemClicked(entry) })
+            itemsIndexed(state.history) { index, entry ->
+                HistoryItem(
+                    entry = entry,
+                    index = index,
+                    onClick = { onItemClicked(entry) }
+                )
             }
         }
     }
@@ -76,7 +82,11 @@ fun InfoScreen(onBackToStart: () -> Unit) {
 }
 
 @Composable
-fun HistoryItem(entry: QuizHistoryEntry, onClick: () -> Unit) {
+fun HistoryItem(
+    entry: QuizHistoryEntry,
+    index: Int,
+    onClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .padding(horizontal = 12.dp)
@@ -91,24 +101,25 @@ fun HistoryItem(entry: QuizHistoryEntry, onClick: () -> Unit) {
             contentColor = MaterialTheme.colorScheme.onSurface
         )
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "NAME",
+                    text = "Quiz ${index + 1}",
                     style = MaterialTheme.typography.titleLarge
                 )
                 ScoreStars(entry.correctAnswers, entry.totalQuestions)
             }
             Text(
-                "Дата: ${
-                    java.text.SimpleDateFormat("dd.MM.yyyy HH:mm")
-                        .format(java.util.Date(entry.dateTime))
-                }"
+                "Дата: " +
+                        SimpleDateFormat("dd.MM.yyyy HH:mm")
+                            .format(Date(entry.dateTime))
             )
             Text(
                 "Сложность: ${entry.difficulty}",
@@ -123,6 +134,9 @@ fun HistoryItem(entry: QuizHistoryEntry, onClick: () -> Unit) {
 @Composable
 fun HistoryScreenPreview() {
     SurfQuizTheme {
-        HistoryItem(QuizHistoryEntry(222, 1234567890L, 4, 5, "medium")) { }
+        HistoryItem(
+            QuizHistoryEntry(222, 1234567890L, 4, 5, "medium"),
+            index = 1
+        ) { }
     }
 }
