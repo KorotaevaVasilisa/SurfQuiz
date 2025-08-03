@@ -1,7 +1,7 @@
 package ru.vsls.surfquiz.domain.model
 
 data class QuizHistoryEntry(
-    val id: Int = 0,
+    val id: Long = 0,
     val dateTime: Long,
     val correctAnswers: Int,
     val totalQuestions: Int,

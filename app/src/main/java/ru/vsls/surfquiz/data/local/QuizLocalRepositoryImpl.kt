@@ -15,7 +15,7 @@ class QuizLocalRepositoryImpl @Inject constructor(private val api: QuizDao): Qui
         return api.getAllResults()
     }
 
-    override suspend fun deleteById(id: Int) {
+    override suspend fun deleteById(id: Long) {
         api.deleteById(id)
     }
 }

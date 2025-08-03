@@ -8,12 +8,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.vsls.surfquiz.domain.usecase.DeleteQuizHistoryEntryUseCase
 import ru.vsls.surfquiz.domain.usecase.GetQuizHistoryUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     private val getQuizHistoryUseCase: GetQuizHistoryUseCase,
+    private val deleteQuizHistoryUseCase: DeleteQuizHistoryEntryUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(HistoryUiState())
     val state: StateFlow<HistoryUiState> = _state.asStateFlow()
@@ -27,6 +29,13 @@ class HistoryViewModel @Inject constructor(
             } catch (e: Exception) {
                 _state.value = _state.value.copy(isLoading = false, error = e.message)
             }
+        }
+    }
+
+    fun deleteEntry(id: Long) {
+        viewModelScope.launch {
+            deleteQuizHistoryUseCase(id)
+            loadHistory()
         }
     }
 }

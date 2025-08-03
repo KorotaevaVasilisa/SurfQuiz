@@ -14,5 +14,5 @@ interface QuizDao {
     suspend fun getAllResults(): List<ResultQuizDt>
 
     @Query("DELETE FROM quizzes_table WHERE id = :id")
-    suspend fun deleteById(id: Int)
+    suspend fun deleteById(id: Long)
 }
