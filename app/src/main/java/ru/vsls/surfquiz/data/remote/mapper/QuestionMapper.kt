@@ -1,4 +1,4 @@
-package ru.vsls.surfquiz.data.mapper
+package ru.vsls.surfquiz.data.remote.mapper
 
 import ru.vsls.surfquiz.data.remote.model.QuestionDto
 import ru.vsls.surfquiz.domain.model.Question

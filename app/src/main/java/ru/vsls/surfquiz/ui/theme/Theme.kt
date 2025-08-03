@@ -1,6 +1,5 @@
 package ru.vsls.surfquiz.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -14,9 +13,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = IndigoBackground,
+    secondary = GoldRating,
+    background = IndigoBackground,
+    surface = DarkContainer,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onBackground = GreyContainerArea,
+    onSurface = GreyContainerArea,
+    inverseSurface = InverseContainerDark
 )
 
 // --- Новый ColorScheme на ваших цветах:
@@ -29,6 +34,7 @@ private val LightColorScheme = lightColorScheme(
     onSecondary = Color.White,            // контраст к secondary
     onBackground = Color.Black,           // контраст к background
     onSurface = Color.Black,              // контраст к surface
+    inverseSurface = InverseContainerLight
 )
 
 // --- Кастомные цвета (правильный, неправильный и пр.) ---
@@ -56,7 +62,7 @@ val LocalSurfQuizColors = staticCompositionLocalOf {
 fun SurfQuizTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

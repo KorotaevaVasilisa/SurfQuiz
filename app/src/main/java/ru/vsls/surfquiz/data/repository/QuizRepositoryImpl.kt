@@ -3,7 +3,7 @@ package ru.vsls.surfquiz.data.repository
 import ru.vsls.surfquiz.domain.model.Question
 import ru.vsls.surfquiz.domain.repository.QuizRepository
 import ru.vsls.surfquiz.data.remote.QuizApiService
-import ru.vsls.surfquiz.data.mapper.toDomain
+import ru.vsls.surfquiz.data.remote.mapper.toDomain
 import javax.inject.Inject
 
 /**
