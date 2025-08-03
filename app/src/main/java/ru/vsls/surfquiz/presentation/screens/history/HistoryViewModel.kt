@@ -32,6 +32,10 @@ class HistoryViewModel @Inject constructor(
         }
     }
 
+    fun selectItem(id: Long?) {
+        _state.value = _state.value.copy(selectedItemId = id)
+    }
+
     fun deleteEntry(id: Long) {
         viewModelScope.launch {
             deleteQuizHistoryUseCase(id)

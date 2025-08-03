@@ -6,4 +6,5 @@ data class HistoryUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val history: List<QuizHistoryEntry> = emptyList(),
+    val selectedItemId: Long? = null
 )
