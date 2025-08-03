@@ -120,7 +120,13 @@ fun QuizNavHost(navController: NavHostController, modifier: Modifier = Modifier)
             QuizScreen()
         }
         composable(Screen.History.route) {
-            HistoryScreen()
+            HistoryScreen(
+                onBackToStart = {
+                    navController.navigate(Screen.Quiz.route) {
+                        popUpTo(Screen.Quiz.route) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 }
