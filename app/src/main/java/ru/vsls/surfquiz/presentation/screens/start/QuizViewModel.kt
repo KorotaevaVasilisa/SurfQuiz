@@ -24,11 +24,11 @@ class QuizViewModel @Inject constructor(
     private val _state = MutableStateFlow(QuizUiState())
     val state: StateFlow<QuizUiState> = _state.asStateFlow()
 
-    fun loadQuiz() {
+    fun loadQuiz(difficulty: String) {
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true, error = null)
             try {
-                val questions = getQuizzesUseCase()
+                val questions = getQuizzesUseCase(difficulty = difficulty)
                 _state.value = QuizUiState(questions = questions)
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
