@@ -67,7 +67,7 @@ fun QuizStartBlock(
                         DropdownMenuItem(
                             text = { Text(selectionOption) },
                             onClick = {
-                                selectedLevel = selectionOption.lowercase()
+                                selectedLevel = selectionOption
                                 expanded = false
                             }
                         )

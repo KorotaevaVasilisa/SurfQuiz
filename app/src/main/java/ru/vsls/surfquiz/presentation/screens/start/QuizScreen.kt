@@ -35,11 +35,9 @@ fun QuizScreen() {
             uiState.isLoading -> CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
             uiState.error != null -> ErrorBlock(
                 uiState.error,
-                { level -> viewModel.loadQuiz(level) })
+                viewModel::loadQuiz)
 
-            uiState.questions.isEmpty() -> QuizStartBlock(onStart = { level ->
-                viewModel.loadQuiz(level)
-            })
+            uiState.questions.isEmpty() -> QuizStartBlock(onStart = viewModel::loadQuiz)
 
             uiState.quizFinished ->
                 QuizResultBlock(
